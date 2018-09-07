@@ -23,7 +23,9 @@ const ROUTES = [
 
     ],
     //canActivate: [ GuardiaService ]
-  }
+  },
+  { path: '**', pathMatch: 'full', redirectTo:'login' }
+
 ];
 
 export const ROUTES_APP = RouterModule.forRoot(ROUTES, {useHash:true});
