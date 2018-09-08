@@ -1,0 +1,77 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a>Panel</a>
+  </li>
+  <li class="breadcrumb-item active">Inventario</li>
+</ol>
+<div class="container">
+  <div class="row justify-content-md-center">
+      <button class="btn btn-success" (click)="modalAddProduct(contentModalAddProduct)">Agregar producto</button>
+  </div>
+  <h3>Inventario de productos</h3>
+  <table class="table"> 
+    <thead>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Valor P/U</th>
+      <th>Stock</th>
+      <th>Opciones</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+    <!-- MODAL CALIFICACIÓN ENTREVISTA DE INSCRIPCIÓN -->
+    <ng-template #contentModalAddProduct let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar producto al inventario.</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <section class="row">
+    
+              <form class="container" [formGroup]="forma" (ngSubmit)="addProduct()">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Nombre</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre">
+                    <small id="emailHelp" class="form-text error">We'll never share your email with anyone else.</small>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Valor P/U</label>
+                    <input type="number" class="form-control" id="exampleInputPassword1" placeholder="Valor P/U">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Stock</label>
+                    <input type="numer" class="form-control" id="exampleInputPassword1" placeholder="Stock">
+                  </div>
+                </form>
+
+          </section>
+    
+          <hr>
+          <hr>
+          <div *ngIf="actualizadaExitosamenteEntrevista" class="alert alert-success text-center col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" role="alert">
+            Calificación guardada con exito!!
+          </div>
+    
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+          <button type="button" class="btn btn-success" (click)="addProduct()"
+          [disabled]="forma.invalid" >Asignar</button>        
+        </div>
+      </ng-template>
+      <!-- FIN MODAL ENTREVISTA DE INSCRIPCIÓN -->

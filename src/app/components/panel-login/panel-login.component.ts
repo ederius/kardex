@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 
 //Services
 import { AutenticacionService } from "../../services/autenticacion.service";
+import { log } from 'util';
 
 
 @Component({
@@ -27,6 +28,12 @@ export class PanelLoginComponent implements OnInit {
       'contrasena'  : new FormControl('', [Validators.minLength(6), Validators.required])
     });
 
+    _authService.getSession().then(user=>{
+      if (user) {
+        this.router.navigate(['/panel']);
+      }
+    })
+
 
   }
 
@@ -36,11 +43,8 @@ export class PanelLoginComponent implements OnInit {
   login(){
     this._authService.login(this.forma.value.correo, this.forma.value.contrasena)
     .then(data=>{
-      this.authState = data;     
-      console.log(data);
-           
+      this.authState = data;              
           this.router.navigate(['/panel']);
-      
     })
     .catch(error=>{
       switch (error.code) {

@@ -22,5 +22,12 @@ export class AutenticacionService{
       return error;
     });
   }
+
+  getSession(){
+    return new Promise((resolved, reject)=>{
+      resolved(auth().currentUser);
+    });
+  }
+
     
 }

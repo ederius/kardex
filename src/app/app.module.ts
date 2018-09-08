@@ -8,11 +8,14 @@ import {MatIconModule} from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from "./components/shared/navbar/navbar.component";
 import { HeaderComponent } from "./components/shared/header/header.component";
+import { FooterComponent } from './components/footer/footer.component';
 
+//Services
 import { AutenticacionService } from "./services/autenticacion.service";
+import { GuardiaService } from "./services/guardia.service";
+
 
 import { routedComponents, ROUTES_APP } from "./routes";
-import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { FooterComponent } from './components/footer/footer.component';
     MatIconModule
   ],
   providers: [
-    AutenticacionService
+    AutenticacionService,
+    GuardiaService
   ],
   bootstrap: [AppComponent]
 })

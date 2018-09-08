@@ -5,11 +5,12 @@ import { Routes, RouterModule, RouterLinkActive } from '@angular/router';
 import { PanelLoginComponent }          from "./components/panel-login/panel-login.component";
 import { PanelComponent }          from "./components/panel/panel.component";
 import { PanelInicioComponent }          from "./components/panel-inicio/panel-inicio.component";
+import { PanelInventarioComponent } from "./components/panel-inventario/panel-inventario.component";
+import { PanelMovimientosComponent } from "./components/panel-movimientos/panel-movimientos.component";
+import { PanelKardexComponent } from "./components/panel-kardex/panel-kardex.component";
 
-
-// //servicios
-// import { GuardiaService }     from "./services/guardia.service";
-// import { GuardiaPinService }  from "./services/guardia-pin.service";
+//servicios
+import { GuardiaService }     from "./services/guardia.service";
 
 const ROUTES = [
 
@@ -18,7 +19,10 @@ const ROUTES = [
   { path: 'panel', component: PanelComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'inicio'},
-      { path: 'inicio',         component:PanelInicioComponent },
+      { path: 'inicio', component:PanelInicioComponent },
+      { path: 'inventario', component:PanelInventarioComponent },
+      { path: 'movimientos', component:PanelMovimientosComponent },
+      { path: 'kardex', component:PanelKardexComponent },
       { path: '**', pathMatch: 'full', redirectTo:'inicio' }
 
     ],
@@ -35,4 +39,7 @@ export const routedComponents = [
   PanelLoginComponent,
   PanelComponent, 
   PanelInicioComponent, 
+  PanelInventarioComponent,
+  PanelMovimientosComponent,
+  PanelKardexComponent
 ];
