@@ -385,3 +385,9 @@
   .white-text{
     color: white;
   }
+
+  .tableEmpty{
+    color:#a0a0a0;
+    text-align: center;
+    padding: 10px;
+  }

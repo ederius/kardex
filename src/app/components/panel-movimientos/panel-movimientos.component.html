@@ -6,6 +6,141 @@
   </li>
   <li class="breadcrumb-item active">Movimientos</li>
 </ol>
-<p>
-  panel-movimientos works!
-</p>
+  
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row">
+
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h3 class="text-center title ">Movimientos</h3>
+      </div>
+      <hr>
+      <div class="col-12 center text-center">
+          <button class="btn btn-success text-center " (click)="modalAddSale(contentModalAddSale)">Registrar venta</button>
+          <div 
+            *ngIf="products?.length==0"
+            class="alert alert-danger" 
+            role="alert">
+                Para registrar ventas primero debe registrar productos en inventario.
+            </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <br><br>
+          <table class="table col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <thead>
+              <tr>
+                <th class="text-center">Fecha </th>              
+                <th class="text-center">Producto</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Valor</th>
+                <th class="text-center">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sale of sales; index">
+                <td class="text-center">{{sale.date}}</td>
+                <td class="text-center">{{sale.name}}</td>
+                <td class="text-center">{{sale.quantity | number}}</td>
+                <td class="text-center">{{sale.valueV | currency}}</td>
+                <td class="text-center">{{sale.valueV * sale.quantity | currency}}</td>
+              </tr>
+              <tr>
+                  <td></td>
+                  <td *ngIf="sales?.length!=0"><strong>Saldo total: </strong></td>
+                  <td></td>
+                  <td>{{saldoTotal | currency }}</td>
+                  <td class="text-center"> {{totalTotal | currency}} </td>
+                </tr>
+            </tbody>
+          </table>
+          <div *ngIf="sales?.length==0" class="text-center center tableEmpty col-12">
+            <i class="fa fa-inbox fa-5x" aria-hidden="true"></i>           
+            <h4>No hay registros para mostrar</h4>
+          </div>
+      </div>
+
+    </div>
+  </div>
+
+
+    <!-- MODAL EDITAR GASTO -->
+    <ng-template #contentModalAddSale let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Registrar venta</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <br>
+
+        <form name="forma" #forma>
+          
+            <div class="form-group">
+                <label for="product">Seleccione un producto</label>
+                <select 
+                name="product" id="product" (change)="productSelected()" 
+                [(ngModel)]="productSelect" #productForm="ngModel" class="form-control" required>
+                  <option value="">Seleccione un producto</option>
+                  <option value={{i}} *ngFor="let product of products ; index as i">{{i+1}}. {{product.name}}</option>
+                </select>
+            </div>
+            <div 
+            *ngIf="productForm.errors?.required && productForm.touched"
+            class="alert alert-danger" 
+            role="alert">
+                Campo requerido
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock</label>
+                <input 
+                readonly type="number" class="form-control" 
+                id="stock" name="stock" [(ngModel)]="stock" placeholder="Stock">
+            </div>
+            <div class="form-group">
+                <label for="valueV">Valor unitario</label>
+                <input readonly type="number" class="form-control" 
+                id="valueV" name="valueV" [(ngModel)]="valueV" placeholder="Valor">
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Cantidad</label>
+                <input 
+                type="number" class="form-control" id="quantity" name="quantity" (keyup)="changeStock()"
+                [(ngModel)]="quantity" placeholder="Cantidad" #quantityForm="ngModel" required min="1">
+                <div 
+                *ngIf="quantityForm.errors?.required && quantityForm.touched"
+                class="alert alert-danger" 
+                role="alert">
+                    Campo requerido
+                </div>
+                <div 
+                *ngIf="quantityForm.errors?.min && quantityForm.touched"
+                class="alert alert-danger" 
+                role="alert">
+                    El valor minimo permitido es 1
+                </div>
+                <div 
+                *ngIf="(product?.stock - quantity) < 0 && quantityForm.touched"
+                class="alert alert-danger" 
+                role="alert">
+                    El cantidad supera la existencia en inventario ({{product.stock}})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="total">Total</label>
+                <input 
+                readonly [value]=" quantity * valueV" type="number" class="form-control" 
+                id="total" name="total" [(ngModel)]="total" placeholder="Total">
+            </div>
+        </form>
+
+      </div>
+      <div class="alert alert-success text-center" *ngIf="success">{{success}}</div>
+      <div class="alert alert-error text-center" *ngIf="error">{{error}}</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+        <button type="button" class="btn btn-success" (click)="addSale()" [disabled]="productForm.invalid || quantityForm.invalid || stock < 0 ">Agregar</button>        
+      </div>
+    </ng-template>
+    <!--FIN MODAL EDITAR GASTO -->

@@ -9,29 +9,92 @@
   <div class="row justify-content-md-center">
       <button class="btn btn-success" (click)="modalAddProduct(contentModalAddProduct)">Agregar producto</button>
   </div>
+  <br>
   <h3>Inventario de productos</h3>
   <table class="table"> 
     <thead>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Valor P/U</th>
-      <th>Stock</th>
+      <th class="text-center">Fecha</th>
+      <th class="text-center">Nombre</th>
+      <th class="text-center">Stock</th>
+      <th class="text-center">Valor unitario</th>
+      <th class="text-center">Valor de V.</th>
+      <th class="text-center">Total</th>
       <th>Opciones</th>
     </thead>
     <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr *ngFor="let product of products; index">
+        <td class="text-center">{{product?.date}}</td>
+        <td class="text-center">{{product?.name}}</td>
+        <td class="text-center">{{product?.stock | number}}</td>
+        <td class="text-center">{{product?.value | currency}}</td>
+        <td class="text-center">{{product?.valueV | currency}}</td>
+        <td class="text-center">{{product.stock*product.value | number}}</td>
+        <td class="text-center">
+            <a 
+            (click)="modalAddElementsProduct(product, contentModalAddElementsProduct)"
+            title="Agregar elementos a stock">
+              <i class="fa fa-plus" aria-hidden="true"></i>
+            </a>
+        </td>
       </tr>
     </tbody>
   </table>
+  <div *ngIf="products?.length==0" class="text-center center tableEmpty col-12">
+    <i class="fa fa-inbox fa-5x" aria-hidden="true"></i>           
+    <h4>No hay registros para mostrar</h4>
+  </div>
 </div>
 
 
-    <!-- MODAL CALIFICACIÓN ENTREVISTA DE INSCRIPCIÓN -->
+    <!-- MODAL AGREGAR PRODUCTO -->
+    <ng-template #contentModalAddElementsProduct let-c="close" let-d="dismiss">
+        <div class="modal-header">
+          <h4 class="modal-title">Agregar elementos a este producto.</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <section class="row">
+              <form class="container" [formGroup]="formaAddElementsProduct" >
+                  <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input 
+                    type="number" class="form-control" 
+                    id="stock" name="stock" formControlName="stock" 
+                    placeholder="Stock" >
+                    <div 
+                    *ngIf="formaAddElementsProduct.controls.stock.errors?.required" 
+                    class="alert alert-danger" 
+                    role="alert">
+                        Campo requerido
+                    </div>
+                    <div 
+                    *ngIf="formaAddElementsProduct.controls.stock.errors?.min" 
+                    class="alert alert-danger" 
+                    role="alert">
+                        El valor minimo permitido es 1
+                    </div>
+                  </div>
+                </form>
+          </section>
+    
+          <hr>
+          <div *ngIf="successAddStock" class="alert alert-success text-center col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" role="alert">
+            Producto ingrementado con exito.
+          </div>
+    
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+          <button type="submit" class="btn btn-success" (click)="addElementsProduct()" [disabled]="formaAddElementsProduct.invalid">Agregar</button>        
+        </div>
+      </ng-template>
+      <!-- FIN MODAL AGREGAR PRODUCTO -->
+
+    <!-- MODAL AGREGAR PRODUCTO -->
     <ng-template #contentModalAddProduct let-c="close" let-d="dismiss">
         <div class="modal-header">
           <h4 class="modal-title">Agregar producto al inventario.</h4>
@@ -40,38 +103,87 @@
           </button>
         </div>
         <div class="modal-body">
-          <section class="row">
-    
-              <form class="container" [formGroup]="forma" (ngSubmit)="addProduct()">
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Nombre</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre">
-                    <small id="emailHelp" class="form-text error">We'll never share your email with anyone else.</small>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Valor P/U</label>
-                    <input type="number" class="form-control" id="exampleInputPassword1" placeholder="Valor P/U">
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Stock</label>
-                    <input type="numer" class="form-control" id="exampleInputPassword1" placeholder="Stock">
-                  </div>
-                </form>
 
+          <section class="row">
+              <form class="container" [formGroup]="forma" >
+                  <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" name="name" id="name" formControlName="name" placeholder="Nombre">
+                    <div 
+                    *ngIf="forma.controls.name.errors?.required && forma.dirty" 
+                    class="alert alert-danger" 
+                    role="alert">
+                        Campo requerido
+                    </div>
+                    <div 
+                    *ngIf="forma.controls.name.errors?.minlength && forma.dirty" 
+                    class="alert alert-danger" 
+                    role="alert">
+                        Se requiere que tenga minimo 3 caracteres
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="stock">Stock</label>
+                      <input type="number" class="form-control" id="stock" name="stock" formControlName="stock" placeholder="Stock">
+                      <div 
+                      *ngIf="forma.controls.stock.errors?.required && forma.dirty" 
+                      class="alert alert-danger" 
+                      role="alert">
+                          Campo requerido
+                      </div>
+                      <div 
+                      *ngIf="forma.controls.stock.errors?.min && forma.dirty" 
+                      class="alert alert-danger" 
+                      role="alert">
+                          El valor minimo permitido es 1
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="Value">Valor unitario</label>
+                    <input type="number" class="form-control" name="value" id="value" formControlName="value" placeholder="Valor P/U">
+                    <div 
+                    *ngIf="forma.controls.value.errors?.required && forma.dirty" 
+                    class="alert alert-danger" 
+                    role="alert">
+                        Campo requerido
+                    </div>
+                    <div 
+                    *ngIf="forma.controls.value.errors?.min && forma.dirty" 
+                    class="alert alert-danger" 
+                    role="alert">
+                        EL valor minimo permitido es 50
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="Value">Valor de v.</label>
+                      <input type="number" class="form-control" name="value" id="valueV" formControlName="valueV" placeholder="Valor de V.">
+                      <div 
+                      *ngIf="forma.controls.valueV.errors?.required && forma.dirty" 
+                      class="alert alert-danger" 
+                      role="alert">
+                          Campo requerido
+                      </div>
+                      <div 
+                      *ngIf="forma.controls.valueV.errors?.min && forma.dirty" 
+                      class="alert alert-danger" 
+                      role="alert">
+                          El valor minimo permitido es 50
+                      </div>
+                  </div>
+
+                </form>
           </section>
     
           <hr>
-          <hr>
-          <div *ngIf="actualizadaExitosamenteEntrevista" class="alert alert-success text-center col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" role="alert">
-            Calificación guardada con exito!!
+          <div *ngIf="successAddProduct" class="alert alert-success text-center col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center" role="alert">
+            Producto agregado con exito.
           </div>
     
         </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
-          <button type="button" class="btn btn-success" (click)="addProduct()"
-          [disabled]="forma.invalid" >Asignar</button>        
+          <button type="submit" class="btn btn-success" (click)="addProduct()" [disabled]="forma.invalid">Agregar</button>        
         </div>
       </ng-template>
-      <!-- FIN MODAL ENTREVISTA DE INSCRIPCIÓN -->
+      <!-- FIN MODAL AGREGAR PRODUCTO -->

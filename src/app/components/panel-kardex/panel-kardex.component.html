@@ -6,6 +6,58 @@
   </li>
   <li class="breadcrumb-item active">Kardex</li>
 </ol>
-<p>
-  panel-kardex works!
-</p>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="row">
+
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h3 class="text-center title ">Kardex</h3>
+      </div>
+      <hr>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <br><br>
+          <table class="table col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <thead>
+              <tr>
+                <th class="text-center"></th>              
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-center"></th>
+                <th class="text-right">Entr</th>
+                <th class="text-left">ada</th>
+                <th class="text-right">Sal</th>
+                <th class="text-left">ida</th>
+                <th class="text-right">Sal</th>
+                <th class="text-left">do</th>
+              </tr>
+              <tr>
+                <th class="text-center">Fecha</th>              
+                <th class="text-center">Detalle</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Valor unitario</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Total</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Total</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sale of sales; index">
+                <td class="text-center">{{sale.date}}</td>
+                <td class="text-center">{{sale.name}}</td>
+                <td class="text-center">{{sale.quantity | number}}</td>
+                <td class="text-center">{{sale.valueV | currency}}</td>
+                <td class="text-center">{{sale.valueV * sale.quantity | currency}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="sales?.length==0" class="text-center center tableEmpty col-12">
+            <i class="fa fa-inbox fa-5x" aria-hidden="true"></i>           
+            <h4>No hay registros para mostrar</h4>
+          </div>
+      </div>
+
+    </div>
+  </div>
+
