@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { NgForm, FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgForm, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 
 //Services
 import { ProductsService } from "../../services/products.service";
@@ -18,7 +18,7 @@ export class PanelInventarioComponent implements OnInit {
   successAddProduct:boolean;
   successAddStock:boolean
   products:Array<any>;
-  product:any;
+  product:any= {};
   inputsForms:any;
 
 
@@ -27,12 +27,17 @@ export class PanelInventarioComponent implements OnInit {
     private modalService: NgbModal,
     private _productsServices:ProductsService,
   ) { 
+
     this.forma = new FormGroup({
       'name' : new FormControl('', [Validators.minLength(3), Validators.required]),
       'value' : new FormControl('', [Validators.min(50), Validators.required]),
       'valueV' : new FormControl('', [Validators.min(50), Validators.required]),
       'stock' : new FormControl('', [Validators.min(1), Validators.required])
     });
+
+    this.formaAddElementsProduct = new FormGroup({
+      'stock'  : new FormControl('', [Validators.min(1), Validators.required])
+    })
     this.getProducts();
   }
 
@@ -40,7 +45,7 @@ export class PanelInventarioComponent implements OnInit {
   }
 
   modalAddProduct(contentModal){
-    this.modalService.open(contentModal, {size: 'xl' as 'lg'}).result.then((result) => {
+    this.modalService.open(contentModal, {size: 'sm'}).result.then((result) => {
     }, (reason) => {
     });
   }
@@ -70,10 +75,7 @@ export class PanelInventarioComponent implements OnInit {
 
   modalAddElementsProduct(product, contentModal){
     this.product=product;
-    this.formaAddElementsProduct = new FormGroup({
-      'stock'  : new FormControl('', [Validators.min(1), Validators.required])
-    })
-    this.modalService.open(contentModal, {size: 'xl' as 'lg'}).result.then((result) => {
+    this.modalService.open(contentModal, {size: 'sm'}).result.then((result) => {
     }, (reason) => {
     });
   }
@@ -92,6 +94,45 @@ export class PanelInventarioComponent implements OnInit {
     })
   }
 
+  formaChageDirty(input){
+    switch (input) {
+      case 'name':
+        try{
+          this.forma.controls.name.errors.dirty = true;
+        }catch(error){}
+        break;
+      case 'stock':
+      try{
+        this.forma.controls.stock.errors.dirty = true;
+      }catch(error){}        
+      break;
+      case 'value':
+      try{
+        this.forma.controls.value.errors.dirty = true;
+      }catch(error){}        
+      break;
+      case 'valueV':
+      try{
+        this.forma.controls.valueV.errors.dirty = true;
+      }catch(error){}        
+      break;
+    
+      default:
+        break;
+    }
+  }
+
+  formaAddElementsChageDirty(input){
+    switch (input) {
+      case 'stock':
+      try{
+        this.formaAddElementsProduct.controls.stock.errors.dirty = true;
+      }catch(error){}        
+      break;
+      default:
+        break;
+    }
+  }
 
 
 

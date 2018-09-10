@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { PanelLoginComponent } from './panel-login.component';
+import { ReactiveFormsModule } from "@angular/forms";
+
+import { AutenticacionService } from "../../services/autenticacion.service";
 
 describe('PanelLoginComponent', () => {
   let component: PanelLoginComponent;
@@ -8,7 +11,13 @@ describe('PanelLoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PanelLoginComponent ]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule
+      ],
+      declarations: [ PanelLoginComponent ],
+      providers: [AutenticacionService]
+
     })
     .compileComponents();
   }));

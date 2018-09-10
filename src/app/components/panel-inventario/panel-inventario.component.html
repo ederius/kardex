@@ -63,9 +63,9 @@
                     <input 
                     type="number" class="form-control" 
                     id="stock" name="stock" formControlName="stock" 
-                    placeholder="Stock" >
+                    placeholder="Stock" (keyup)="formaAddElementsChageDirty('stock')">
                     <div 
-                    *ngIf="formaAddElementsProduct.controls.stock.errors?.required" 
+                    *ngIf="formaAddElementsProduct.controls.stock.errors?.required && formaAddElementsProduct.controls.stock.errors?.dirty" 
                     class="alert alert-danger" 
                     role="alert">
                         Campo requerido
@@ -108,15 +108,17 @@
               <form class="container" [formGroup]="forma" >
                   <div class="form-group">
                     <label for="name">Nombre</label>
-                    <input type="text" class="form-control" name="name" id="name" formControlName="name" placeholder="Nombre">
+                    <input 
+                    type="text" class="form-control" name="name" id="name" 
+                    formControlName="name" placeholder="Nombre" (keyup)="formaChageDirty('name')">
                     <div 
-                    *ngIf="forma.controls.name.errors?.required && forma.dirty" 
+                    *ngIf="forma.controls.name.errors?.required && forma.controls.name.errors?.dirty" 
                     class="alert alert-danger" 
                     role="alert">
                         Campo requerido
                     </div>
                     <div 
-                    *ngIf="forma.controls.name.errors?.minlength && forma.dirty" 
+                    *ngIf="forma.controls.name.errors?.minlength && forma.controls.name.errors?.dirty" 
                     class="alert alert-danger" 
                     role="alert">
                         Se requiere que tenga minimo 3 caracteres
@@ -124,15 +126,17 @@
                   </div>
                   <div class="form-group">
                       <label for="stock">Stock</label>
-                      <input type="number" class="form-control" id="stock" name="stock" formControlName="stock" placeholder="Stock">
+                      <input 
+                      type="number" class="form-control" id="stock" name="stock" 
+                      formControlName="stock" placeholder="Stock" (keyup)="formaChageDirty('stock')">
                       <div 
-                      *ngIf="forma.controls.stock.errors?.required && forma.dirty" 
+                      *ngIf="forma.controls.stock.errors?.required && forma.controls.stock.errors?.dirty" 
                       class="alert alert-danger" 
                       role="alert">
                           Campo requerido
                       </div>
                       <div 
-                      *ngIf="forma.controls.stock.errors?.min && forma.dirty" 
+                      *ngIf="forma.controls.stock.errors?.min && forma.controls.stock.errors?.dirty" 
                       class="alert alert-danger" 
                       role="alert">
                           El valor minimo permitido es 1
@@ -140,15 +144,17 @@
                   </div>
                   <div class="form-group">
                     <label for="Value">Valor unitario</label>
-                    <input type="number" class="form-control" name="value" id="value" formControlName="value" placeholder="Valor P/U">
+                    <input 
+                    type="number" class="form-control" name="value" id="value" 
+                    formControlName="value" placeholder="Valor P/U" (keyup)="formaChageDirty('value')">
                     <div 
-                    *ngIf="forma.controls.value.errors?.required && forma.dirty" 
+                    *ngIf="forma.controls.value.errors?.required && forma.controls.value.errors?.dirty" 
                     class="alert alert-danger" 
                     role="alert">
                         Campo requerido
                     </div>
                     <div 
-                    *ngIf="forma.controls.value.errors?.min && forma.dirty" 
+                    *ngIf="forma.controls.value.errors?.min && forma.controls.value.errors?.dirty" 
                     class="alert alert-danger" 
                     role="alert">
                         EL valor minimo permitido es 50
@@ -156,15 +162,17 @@
                   </div>
                   <div class="form-group">
                       <label for="Value">Valor de v.</label>
-                      <input type="number" class="form-control" name="value" id="valueV" formControlName="valueV" placeholder="Valor de V.">
+                      <input 
+                      type="number" class="form-control" name="value" id="valueV" 
+                      formControlName="valueV" placeholder="Valor de V." (keyup)="formaChageDirty('valueV')">
                       <div 
-                      *ngIf="forma.controls.valueV.errors?.required && forma.dirty" 
+                      *ngIf="forma.controls.valueV.errors?.required && forma.controls.valueV.errors?.dirty" 
                       class="alert alert-danger" 
                       role="alert">
                           Campo requerido
                       </div>
                       <div 
-                      *ngIf="forma.controls.valueV.errors?.min && forma.dirty" 
+                      *ngIf="forma.controls.valueV.errors?.min && forma.controls.valueV.errors?.dirty" 
                       class="alert alert-danger" 
                       role="alert">
                           El valor minimo permitido es 50

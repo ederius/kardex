@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from "../environments/environment";
+import { RouterModule } from "@angular/router";
 import * as firebase from "firebase";
 
 
@@ -12,7 +13,9 @@ export class AppComponent {
   title = 'kardex';
 
   constructor(){
-    firebase.initializeApp(environment.firebase);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(environment.firebase);
+    }
   }
 }
 

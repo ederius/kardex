@@ -60,6 +60,15 @@ export class SalesService {
     });
   }
 
+  getSalesByProduct(sale){
+    return database().ref(`historySalesByProduct/${sale.keyProduct}`).once('value').then(data => {
+      return _.map(data.val());
+    })
+    .catch(error => {
+      return error
+    });
+  }
+
 
 
 }

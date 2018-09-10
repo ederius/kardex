@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgForm, FormControl, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 
 //Services
 import { AutenticacionService } from "../../services/autenticacion.service";
-import { log } from 'util';
-
 
 @Component({
   selector: 'app-panel-login',

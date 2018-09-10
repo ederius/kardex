@@ -1,0 +1,34 @@
+
+
+.title-kardes{
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 5%;
+    background:lightskyblue;
+    color: white;
+    font-size: 2em;
+    padding-left: 7%;
+    padding-right: 5%;
+    border: 1px solid;
+}
+
+.kardex-entrada{
+    margin-left: 38.5%;
+}
+
+.kardex-salida{
+    padding-right: 6%;
+    padding-left: 6%;
+
+}
+
+.kardex-saldo{
+    padding-right: 7%;
+    padding-left: 7%;
+}
+
+.blue-col{
+    background: lightskyblue ;
+    border: 1px solid white;
+    color: white;
+}

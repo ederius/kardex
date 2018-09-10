@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, RouterLinkActive } from '@angular/router';
 
+import { NavbarComponent } from "./components/shared/navbar/navbar.component";
+import { HeaderComponent } from "./components/shared/header/header.component";
+import { FooterComponent } from './components/footer/footer.component';
+
 //Panel de administracion
 import { PanelLoginComponent }          from "./components/panel-login/panel-login.component";
 import { PanelComponent }          from "./components/panel/panel.component";
@@ -36,6 +40,9 @@ export const ROUTES_APP = RouterModule.forRoot(ROUTES, {useHash:true});
 
 export const routedComponents = [
   //Components dashboard - componentes del panel
+  NavbarComponent,
+  HeaderComponent,
+  FooterComponent,
   PanelLoginComponent,
   PanelComponent, 
   PanelInicioComponent, 

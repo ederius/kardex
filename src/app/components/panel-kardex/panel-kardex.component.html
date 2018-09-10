@@ -6,58 +6,220 @@
   </li>
   <li class="breadcrumb-item active">Kardex</li>
 </ol>
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="row">
+  <div class="row">
 
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <h3 class="text-center title ">Kardex</h3>
-      </div>
-      <hr>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <br><br>
-          <table class="table col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <thead>
-              <tr>
-                <th class="text-center"></th>              
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-                <th class="text-center"></th>
-                <th class="text-right">Entr</th>
-                <th class="text-left">ada</th>
-                <th class="text-right">Sal</th>
-                <th class="text-left">ida</th>
-                <th class="text-right">Sal</th>
-                <th class="text-left">do</th>
-              </tr>
-              <tr>
-                <th class="text-center">Fecha</th>              
-                <th class="text-center">Detalle</th>
-                <th class="text-center">Nombre</th>
-                <th class="text-center">Valor unitario</th>
-                <th class="text-center">Cantidad</th>
-                <th class="text-center">Total</th>
-                <th class="text-center">Cantidad</th>
-                <th class="text-center">Total</th>
-                <th class="text-center">Cantidad</th>
-                <th class="text-center">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let sale of sales; index">
-                <td class="text-center">{{sale.date}}</td>
-                <td class="text-center">{{sale.name}}</td>
-                <td class="text-center">{{sale.quantity | number}}</td>
-                <td class="text-center">{{sale.valueV | currency}}</td>
-                <td class="text-center">{{sale.valueV * sale.quantity | currency}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div *ngIf="sales?.length==0" class="text-center center tableEmpty col-12">
-            <i class="fa fa-inbox fa-5x" aria-hidden="true"></i>           
-            <h4>No hay registros para mostrar</h4>
-          </div>
-      </div>
-
+    <div class="col-12">
+      <h3 class="text-center title ">Kardex</h3>
     </div>
+    <hr>
+    <div class="col-12">
+        <br><br>
+        <div class="header-kardex col-12">
+          <span class="title-kardes kardex-entrada">Entrada</span>
+          <span class="title-kardes kardex-salida">Salida</span>
+          <span class="title-kardes kardex-saldo">saldo</span>
+        </div>
+        <table class="table col-12">
+          <thead>
+            <!-- <tr>
+              <th class="text-center"></th>              
+              <th class="text-center"></th>
+              <th class="text-center"></th>
+              <th class="text-center"></th>
+              <th class="text-right">Entr</th>
+              <th class="text-left">ada</th>
+              <th class="text-right">Sal</th>
+              <th class="text-left">ida</th>
+              <th class="text-right">Sal</th>
+              <th class="text-left">do</th>
+            </tr> -->
+            <tr>
+              <th class="text-center">Fecha</th>              
+              <th class="text-center">Detalle</th>
+              <th class="text-center">Nombre</th>
+              <th class="text-center">Valor unitario</th>
+              <th class="text-center blue-col">Cantidad</th>
+              <th class="text-center blue-col">Total</th>
+              <th class="text-center blue-col">Cantidad</th>
+              <th class="text-center blue-col">Total</th>
+              <th class="text-center blue-col">Cantidad</th>
+              <th class="text-center blue-col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let purchase of purchased; index">
+              <td class="text-center">{{purchase.date}}</td>
+              <td class="text-center">Compra</td>
+              <td class="text-center">
+                <a 
+                href="#/panel/kardex" 
+                (click)="modalDetailsPurchasesByProduct(contentModalDetailsPurchasesByProduct, purchase)">
+                  {{purchase.name}}
+                </a>
+              </td>
+              <td class="text-center">{{purchase.value | currency}}</td>
+              <td class="text-center">{{purchase.stock | number}}</td>
+              <td class="text-center">{{purchase.value * purchase.stock | currency}}</td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+            </tr>
+            <tr *ngFor="let sale of sales; index">
+              <td class="text-center">{{sale.date}}</td>
+              <td class="text-center">Venta</td>
+              <td class="text-center">
+                <a 
+                href="#/panel/kardex" 
+                (click)="modalDetailsSalesByProduct(contentModalDetailsSalesByProduct, sale)">
+                  {{sale.name}}
+                </a>
+              </td>
+              <td class="text-center">{{sale.valueV | currency}}</td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center">{{sale.quantity | number}}</td>
+              <td class="text-center">{{sale.valueV * sale.quantity | currency}}</td>
+              <td class="text-center">{{sale.stock | number}}</td>
+              <td class="text-center">{{sale.total * sale.stock | currency}}</td>
+            </tr>
+            <tr>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"><strong>Total compras</strong></td>
+              <td class="text-center"> {{purchasesTotal | currency}} </td>
+              <td class="text-center"><strong>Total ventas</strong></td>
+              <td class="text-center"> {{salesTotal | currency}} </td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="sales?.length==0" class="text-center center tableEmpty col-12">
+          <i class="fa fa-inbox fa-5x" aria-hidden="true"></i>           
+          <h4>No hay registros para mostrar</h4>
+        </div>
+    </div>
+
   </div>
 
+
+    <!-- MODAL DETALLE DE VENTAS POR PRODUCTO -->
+  <ng-template #contentModalDetailsPurchasesByProduct let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Detalle de compras por producto selecionado</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <section class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <br><br>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Fecha</th>              
+                      <th class="text-center">Nombre</th>
+                      <th class="text-center">Valor unitario</th>
+                      <th class="text-center">Cantidad</th>
+                      <th class="text-center">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let purchase of detailsPurchasesProduct; index">
+                      <td class="text-center">{{purchase.date}}</td>
+                      <td class="text-center">{{purchase.name}}</td>
+                      <td class="text-center">{{purchase.value | currency}}</td>
+                      <td class="text-center">{{purchase.stock | number}}</td>
+                      <td class="text-center">{{purchase.value * purchase.stock | currency}}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"><strong>Total</strong></td>
+                      <td class="text-center"><strong>{{purchasesByProductTotal | currency}}</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div *ngIf="detailsPurchasesProduct?.length==0" class="text-center center tableEmpty col-12">
+                  <i class="fa fa-inbox fa-5x" aria-hidden="true"></i>           
+                  <h4>No hay registros para mostrar</h4>
+                </div>
+            </div>
+        </section>
+  
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+      </div>
+    </ng-template>
+    <!-- FIN MODAL DETALLE DE COMPRAS POR PRODUCTO -->
+
+
+  <!-- MODAL DETALLE DE VENTAS POR PRODUCTO -->
+  <ng-template #contentModalDetailsSalesByProduct let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title">Detalle de ventas por producto selecionado</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <section class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <br><br>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Fecha</th>              
+                      <th class="text-center">Nombre</th>
+                      <th class="text-center">Valor unitario</th>
+                      <th class="text-center">Cantidad</th>
+                      <th class="text-center">Total</th>
+                      <th class="text-center">Stock</th>
+                      <th class="text-center">Saldo</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let sale of detailsSalesProduct; index">
+                      <td class="text-center">{{sale.date}}</td>
+                      <td class="text-center">{{sale.name}}</td>
+                      <td class="text-center">{{sale.valueV | currency}}</td>
+                      <td class="text-center">{{sale.quantity | number}}</td>
+                      <td class="text-center">{{sale.valueV * sale.quantity | currency}}</td>
+                      <td class="text-center">{{sale.stock | number}}</td>
+                      <td class="text-center">{{sale.total * sale.stock | currency}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"><strong>Total</strong></td>
+                        <td class="text-center"><strong>{{salesByProductTotal | currency}}</strong></td>
+                      </tr>
+                  </tbody>
+                </table>
+                <div *ngIf="detailsSalesProduct?.length==0" class="text-center center tableEmpty col-12">
+                  <i class="fa fa-inbox fa-5x" aria-hidden="true"></i>           
+                  <h4>No hay registros para mostrar</h4>
+                </div>
+            </div>
+        </section>
+  
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Cerrar</button>
+      </div>
+    </ng-template>
+    <!-- FIN MODAL DETALLE DE VENTAS POR PRODUCTO -->

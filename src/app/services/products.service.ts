@@ -59,7 +59,26 @@ export class ProductsService {
         return error
       });
     });
-}
+  }
+
+
+  getHistoryByProduct(){
+    return database().ref(`inventaryHistoryByProduct`).once('value').then(data => {
+      return _.map(data.val());
+    })
+    .catch(error => {
+      return error
+    });
+  }
+
+  getHistoryByProduct2(product){
+    return database().ref(`inventaryHistoryByProduct/${product.key}`).once('value').then(data => {
+      return _.map(data.val());
+    })
+    .catch(error => {
+      return error
+    });
+  }
 
 
 }

@@ -17,9 +17,6 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut(){
-    console.log('====================================');
-    console.log("click");
-    console.log('====================================');
     this._authServices.singOut().then((response)=>{
       this.router.navigate(['/login']);
     })
