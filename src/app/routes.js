@@ -30,7 +30,7 @@ const ROUTES = [
       { path: '**', pathMatch: 'full', redirectTo:'inicio' }
 
     ],
-    //canActivate: [ GuardiaService ]
+    canActivate: [ GuardiaService ]
   },
   { path: '**', pathMatch: 'full', redirectTo:'login' }
 
